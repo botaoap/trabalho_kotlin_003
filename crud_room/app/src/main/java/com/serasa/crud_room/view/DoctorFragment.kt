@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.serasa.crud_room.R
+import com.serasa.crud_room.view_model.DoctorViewModel
 
 class DoctorFragment : Fragment() {
 
