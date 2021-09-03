@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Crud_room">
         <activity
+            android:name=".PatientActivity"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
