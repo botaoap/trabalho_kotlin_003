@@ -1,4 +1,24 @@
 package com.serasa.crud_room.model
 
-class Doctor {
-}
+import androidx.room.*
+
+@Entity
+data class Doctor(
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "doc_id")
+    val id: Long = 0,
+    @ColumnInfo(name = "doc_name")
+    val name: String,
+
+    val categoryFk: Long
+)
+
+data class DoctorWithCategory(
+    @Embedded
+    val doctor: Doctor?,
+    @Relation(
+        parentColumn = "categoryFk",
+        entityColumn = "cat_id"
+    )
+    val category: Category?
+)
