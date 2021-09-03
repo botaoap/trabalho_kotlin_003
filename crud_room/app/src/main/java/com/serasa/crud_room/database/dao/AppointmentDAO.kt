@@ -20,14 +20,15 @@ interface AppointmentDAO {
     fun insertPatient(patient: Patient): Long
 
     fun insert(appointmentWithRelations: AppointmentWithRelations) {
-        insertPatient(appointmentWithRelations.patient!!)
-        insertDoctor(appointmentWithRelations.doctor!!)
+        appointmentWithRelations.patient?.let { pat ->
+            insertPatient(pat)
+        }
+        appointmentWithRelations.doctor?.let { doc ->
+            insertDoctor(doc)
+        }
         appointmentWithRelations.appointment?.let { appointment ->
             insertAppointment(appointment)
         }
-//        appointmentWithRelations.appointmentDoc?.let { appointment ->
-//            insertAppointment(appointment)
-//        }
     }
 
     @Delete
@@ -35,6 +36,9 @@ interface AppointmentDAO {
 
     fun deleteAppointment(appointmentWithRelations: AppointmentWithRelations) {
         delete(appointmentWithRelations.appointment!!)
+        appointmentWithRelations.appointment?.let { appoint ->
+            delete(appoint)
+        }
     }
 
     @Query("UPDATE Appointment SET patFk = :updatePat, docFk = :updateDoc WHERE appoint_id = :idAppoint")

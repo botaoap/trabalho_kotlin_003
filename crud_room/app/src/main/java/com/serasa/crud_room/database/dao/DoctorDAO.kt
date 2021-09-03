@@ -19,7 +19,9 @@ interface DoctorDAO{
     fun insertCategory(category: Category): Long
 
     fun insert(doctorWithCategory: DoctorWithCategory) {
-        insertCategory(doctorWithCategory.category!!)
+        doctorWithCategory.category?.let { cat ->
+            insertCategory(cat)
+        }
         doctorWithCategory.doctor?.let { doc ->
             insertDoctor(doc)
         }
@@ -30,7 +32,9 @@ interface DoctorDAO{
 
     @Delete
     fun deleteDoctor(doctorWithCategory: DoctorWithCategory) {
-        delete(doctorWithCategory.doctor!!)
+        doctorWithCategory.doctor?.let { doc ->
+            delete(doc)
+        }
     }
 
     @Query("UPDATE Doctor SET doc_name = :nameUpdate, categoryFk = :idCategory WHERE doc_id = :idDoctor")
