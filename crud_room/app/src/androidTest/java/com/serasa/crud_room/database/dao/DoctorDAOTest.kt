@@ -78,13 +78,17 @@ class DoctorDAOTest {
     fun update_doctor_returns_true() {
         val category1 = Category(id = 1, name = "Pediatra")
         val category2 = Category(id = 2, name = "PPPP")
-        val doctor1 = Doctor(id = 1, name = "Medico1", categoryFk = 1)
+        val doctor1 = Doctor(id = 1, name = "Medico1", categoryFk = category1.id)
+        val doctor2 = Doctor(id = 2, name = "Medico2", categoryFk = category2.id)
 
-        val doctorWithCategory = DoctorWithCategory(doctor = doctor1, category = category1)
+        val doctorWithCategory1 = DoctorWithCategory(doctor = doctor1, category = category1)
+        val doctorWithCategory2 = DoctorWithCategory(doctor = doctor2, category = category2)
+        dao.insert(doctorWithCategory1)
+        dao.insert(doctorWithCategory2)
         dao.updateDoctor(nameUpdate = "Medicado", idCategory = 2, idDoctor = 1)
 
         val result = dao.getDoctor()
-        assertThat(result).isNotEqualTo(doctorWithCategory)
+        assertThat(result).isNotEqualTo(doctorWithCategory1)
     }
 
 }
