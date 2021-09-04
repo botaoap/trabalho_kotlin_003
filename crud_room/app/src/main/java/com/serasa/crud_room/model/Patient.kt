@@ -10,9 +10,9 @@ data class Patient(
     @ColumnInfo(name = "pat_id")
     val id: Long = 0,
     @ColumnInfo(name = "pat_name")
-    val name: String,
+    var name: String,
     @ColumnInfo(name = "pat_age")
-    val age: Int,
+    var age: Int,
     @ColumnInfo(name = "pat_gender")
-    val gender: String
+    var gender: String
 )
