@@ -27,6 +27,7 @@
                 android:layout_height="120dp"
                 android:layout_margin="16dp"
                 android:src="@drawable/ic_self_improvement"
+                app:layout_constraintBottom_toTopOf="@+id/floating_action_buttonDelete"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,7 +35,7 @@
                 android:id="@+id/outlinedTextFieldId"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
-                android:layout_height="45dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:enabled="false"
                 android:hint="@string/id"
@@ -45,7 +46,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextId"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="match_parent" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -53,7 +54,7 @@
                 android:id="@+id/outlinedTextFieldName"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
-                android:layout_height="45dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:enabled="false"
                 android:hint="@string/name"
@@ -72,7 +73,7 @@
                 android:id="@+id/outlinedTextFieldGender"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
-                android:layout_height="45dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:enabled="false"
                 android:hint="@string/gender"
@@ -91,7 +92,7 @@
                 android:id="@+id/outlinedTextFieldAge"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
-                android:layout_height="45dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:enabled="false"
                 android:hint="@string/age"
@@ -103,7 +104,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_text_age"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:inputType="number"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
