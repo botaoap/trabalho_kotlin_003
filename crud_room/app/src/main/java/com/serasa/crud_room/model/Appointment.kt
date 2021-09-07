@@ -8,9 +8,9 @@ data class Appointment(
     @ColumnInfo(name = "appoint_id")
     var id: Long = 0,
 
-    val patFk: Long,
+    var patFk: Long,
 
-    val docFk: Long
+    var docFk: Long
 )
 
 data class AppointmentWithRelations(

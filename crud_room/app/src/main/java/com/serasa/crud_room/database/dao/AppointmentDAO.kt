@@ -10,37 +10,20 @@ interface AppointmentDAO {
     @Query("SELECT * FROM Appointment")
     fun getAppointments(): List<AppointmentWithRelations>
 
+    @Transaction
+    @Query("SELECT ap.appoint_id, ap.docFk, ap.patFk, doc.doc_name, cat.cat_name, pat.pat_name, pat.pat_gender FROM Appointment as ap inner join Doctor as doc on doc.doc_id = ap.docFk inner join Category as cat on cat.cat_id = doc.categoryFk inner join Patient as pat on pat.pat_id = ap.patFk where lower(pat.pat_gender)  like lower(:gender)")
+    fun getFilteredAppointmentOfGender(gender: String): List<AppointmentWithRelations>
+
+    @Transaction
+    @Query("SELECT ap.appoint_id, ap.docFk, ap.patFk, doc.doc_name, cat.cat_name, pat.pat_name, pat.pat_gender FROM Appointment as ap inner join Doctor as doc on doc.doc_id = ap.docFk inner join Category as cat on cat.cat_id = doc.categoryFk inner join Patient as pat on pat.pat_id = ap.patFk where lower(cat.cat_name)  like lower(:category)")
+    fun getFilteredAppointmentOfCategory(category: String): List<AppointmentWithRelations>
+
     @Insert
     fun insertAppointment(appointment: Appointment)
 
-    @Insert
-    fun insertDoctor(doctor: Doctor): Long
-
-    @Insert
-    fun insertPatient(patient: Patient): Long
-
-    fun insert(appointmentWithRelations: AppointmentWithRelations) {
-        appointmentWithRelations.patient?.let { pat ->
-            insertPatient(pat)
-        }
-        appointmentWithRelations.doctor?.let { doc ->
-            insertDoctor(doc)
-        }
-        appointmentWithRelations.appointment?.let { appointment ->
-            insertAppointment(appointment)
-        }
-    }
-
     @Delete
-    fun delete(appointment: Appointment)
+    fun deleteAppointment(appointment: Appointment)
 
-    fun deleteAppointment(appointmentWithRelations: AppointmentWithRelations) {
-        delete(appointmentWithRelations.appointment!!)
-        appointmentWithRelations.appointment?.let { appoint ->
-            delete(appoint)
-        }
-    }
-
-    @Query("UPDATE Appointment SET patFk = :updatePat, docFk = :updateDoc WHERE appoint_id = :idAppoint")
-    fun updateAppointment(updatePat: Long, updateDoc: Long, idAppoint: Long)
+    @Update
+    fun updateAppointmentTest(appointment: Appointment)
 }
