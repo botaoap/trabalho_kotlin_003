@@ -10,5 +10,9 @@ data class Category(
     @ColumnInfo(name = "cat_id")
     val id: Long = 0,
     @ColumnInfo(name = "cat_name")
-    val name: String
-)
+    var name: String
+) {
+    override fun toString(): String {
+        return name
+    }
+}
