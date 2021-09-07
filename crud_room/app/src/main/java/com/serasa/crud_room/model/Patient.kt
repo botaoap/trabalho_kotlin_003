@@ -15,4 +15,8 @@ data class Patient(
     var age: Int,
     @ColumnInfo(name = "pat_gender")
     var gender: String
-)
+) {
+    override fun toString(): String {
+        return name
+    }
+}

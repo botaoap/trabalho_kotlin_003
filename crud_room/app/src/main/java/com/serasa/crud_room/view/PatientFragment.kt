@@ -10,17 +10,17 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
-import com.serasa.crud_room.PatientActivity
+import com.serasa.crud_room.view_activity.PatientActivity
 import com.serasa.crud_room.R
 import com.serasa.crud_room.adapter.PatientAdapter
 import com.serasa.crud_room.databinding.PatientFragmentBinding
 import com.serasa.crud_room.model.Patient
-import com.serasa.crud_room.utils.ClickOnList
+import com.serasa.crud_room.utils.ClickOnPatient
 import com.serasa.crud_room.view_model.PatientViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PatientFragment : Fragment(R.layout.patient_fragment), ClickOnList {
+class PatientFragment : Fragment(R.layout.patient_fragment), ClickOnPatient {
 
     companion object {
         fun newInstance() = PatientFragment()
@@ -30,12 +30,18 @@ class PatientFragment : Fragment(R.layout.patient_fragment), ClickOnList {
     private lateinit var binding: PatientFragmentBinding
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: PatientAdapter
+    private var GENDER: List<String> = listOf()
 
     private val observerPatient = Observer<List<Patient>> {
         if (it.size == 0) {
             Snackbar.make(requireView(), "Nobody is here", Snackbar.LENGTH_LONG).show()
         }
-        adapter.refresh(it)
+        adapter.refresh(it, GENDER)
+    }
+
+    private val observerGender = Observer<List<String>> {
+        GENDER = it
+        viewModel.fetchPatient()
     }
 
     private val observerError = Observer<String> {
@@ -43,6 +49,8 @@ class PatientFragment : Fragment(R.layout.patient_fragment), ClickOnList {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        binding = PatientFragmentBinding.bind(view)
+//        viewModel = ViewModelProvider(this).get(PatientViewModel::class.java)
         super.onViewCreated(view, savedInstanceState)
 
         loadComponents(view)
@@ -57,13 +65,14 @@ class PatientFragment : Fragment(R.layout.patient_fragment), ClickOnList {
 
         viewModel.patient.observe(viewLifecycleOwner, observerPatient)
         viewModel.error.observe(viewLifecycleOwner, observerError)
+        viewModel.gender.observe(viewLifecycleOwner, observerGender)
 
 
     }
 
     fun executeComponents() {
 
-        viewModel.fetchPatient()
+        viewModel.fetchGender()
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
@@ -75,7 +84,7 @@ class PatientFragment : Fragment(R.layout.patient_fragment), ClickOnList {
         }
     }
 
-    override fun onClickEdit(patient: Patient) {
+    override fun onClickUpdate(patient: Patient) {
 
     }
 
