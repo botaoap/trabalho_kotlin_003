@@ -8,9 +8,9 @@ data class Doctor(
     @ColumnInfo(name = "doc_id")
     val id: Long = 0,
     @ColumnInfo(name = "doc_name")
-    val name: String,
+    var name: String,
 
-    val categoryFk: Long
+    var categoryFk: Long
 )
 
 data class DoctorWithCategory(
@@ -21,4 +21,8 @@ data class DoctorWithCategory(
         entityColumn = "cat_id"
     )
     val category: Category?
-)
+){
+    override fun toString(): String {
+        return doctor?.name!!
+    }
+}
