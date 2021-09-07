@@ -6,8 +6,9 @@ import com.serasa.crud_room.database.dao.AppointmentDAO
 import com.serasa.crud_room.database.dao.CategoryDAO
 import com.serasa.crud_room.database.dao.DoctorDAO
 import com.serasa.crud_room.database.dao.PatientDAO
-import com.serasa.crud_room.model.Appointment
-import com.serasa.crud_room.model.Patient
+import com.serasa.crud_room.repository.AppointmentRepository
+import com.serasa.crud_room.repository.CategoryRepository
+import com.serasa.crud_room.repository.DoctorRepository
 import com.serasa.crud_room.repository.PatientRepository
 import dagger.Module
 import dagger.Provides
@@ -18,6 +19,11 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 class HiltModule {
+
+    @Provides
+    fun providesDatabase(@ApplicationContext context: Context): AppDatabase {
+        return AppDatabase.getDatabase(context)
+    }
 
     @Provides
     fun providesPatient(@ApplicationContext context: Context): PatientDAO {
@@ -40,6 +46,14 @@ class HiltModule {
     }
 
     @Provides
-    fun providesPatientRepository(patitent: PatientDAO): PatientRepository = PatientRepository(patitent)
+    fun providesPatientRepository(patient: PatientDAO): PatientRepository = PatientRepository(patient)
 
+    @Provides
+    fun providesCategoryRepository(database: AppDatabase): CategoryRepository = CategoryRepository(database)
+
+    @Provides
+    fun providesDoctorRepository(doctorDAO: DoctorDAO): DoctorRepository = DoctorRepository(doctorDAO)
+
+    @Provides
+    fun provideAppointmentRepository(appointmentDAO: AppointmentDAO): AppointmentRepository = AppointmentRepository(appointmentDAO)
 }
