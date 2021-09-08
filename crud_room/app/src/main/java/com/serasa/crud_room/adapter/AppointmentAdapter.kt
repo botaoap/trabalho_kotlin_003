@@ -57,7 +57,6 @@ class ItemAppointmentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVi
     private val binding = ItemAppointmentBinding.bind(itemView)
     private var patientObject: Patient? = null
     private var doctorObject: DoctorWithCategory? = null
-    private lateinit var repository: AppDatabase
 
     fun bind(
         appointmentWithRelations: AppointmentWithRelations,
@@ -67,24 +66,30 @@ class ItemAppointmentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVi
     ) {
         binding.autoCompleteDoctorAppointment.setText(appointmentWithRelations.doctor?.name)
         binding.autoCompletePatientAppointment.setText(appointmentWithRelations.patient?.name)
+        binding.editTextIdAppointment.setText(appointmentWithRelations.appointment?.id.toString())
+        binding.editTextDoctorCategoryAppointment.setText(appointmentWithRelations.doctor?.categoryFk.toString())
+        binding.editTexPatientGenderAppointment.setText(appointmentWithRelations.patient?.gender)
 
-        val adapterPatient = ArrayAdapter(
+        // TODO: Load AutoCompleteTextView with PATIENTS
+        ArrayAdapter(
             itemView.context,
             android.R.layout.simple_dropdown_item_1line,
             patients
-        )
-
-        val adapterDoctor = ArrayAdapter(
+        ).let { arrayAdapterPatient ->
+            (binding.autoCompletePatientAppointment as AutoCompleteTextView).let { autoComplete ->
+                autoComplete.setAdapter(arrayAdapterPatient)
+            }
+        }
+        // TODO: Load AutoCompleteTextView with DOCTORS
+        ArrayAdapter(
             itemView.context,
             android.R.layout.simple_dropdown_item_1line,
             doctors
-        )
-
-        val textViewPatient = binding.autoCompletePatientAppointment as AutoCompleteTextView
-        textViewPatient.setAdapter(adapterPatient)
-
-        val textViewDoctor = binding.autoCompleteDoctorAppointment as AutoCompleteTextView
-        textViewDoctor.setAdapter(adapterDoctor)
+        ).let { arrayAdapterDoctor ->
+            (binding.autoCompleteDoctorAppointment as AutoCompleteTextView).let { autoComplete ->
+                autoComplete.setAdapter(arrayAdapterDoctor)
+            }
+        }
 
         binding.autoCompletePatientAppointment.setOnItemClickListener { adapterView, view, i, l ->
             patientObject = adapterView.getItemAtPosition(i) as Patient
@@ -93,10 +98,6 @@ class ItemAppointmentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVi
         binding.autoCompleteDoctorAppointment.setOnItemClickListener { adapterView, view, i, l ->
             doctorObject = adapterView.getItemAtPosition(i) as DoctorWithCategory
         }
-
-        binding.editTextIdAppointment.setText(appointmentWithRelations.appointment?.id.toString())
-        binding.editTextDoctorCategoryAppointment.setText(appointmentWithRelations.doctor?.categoryFk.toString())
-        binding.editTexPatientGenderAppointment.setText(appointmentWithRelations.patient?.gender)
 
         itemView.findViewById<FloatingActionButton>(R.id.floating_action_buttonDeleteAppointment)
             .setOnClickListener {
@@ -117,22 +118,19 @@ class ItemAppointmentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVi
                 binding.floatingActionButtonUpdateAppointment.visibility = View.VISIBLE
                 binding.floatingActionButtonSaveAppointment.visibility = View.INVISIBLE
                 if (doctorObject != null) {
-                    appointmentWithRelations.doctor?.name = doctorObject?.doctor?.name!!
+                    appointmentWithRelations.appointment?.docFk = doctorObject?.doctor?.id!!
                 } else {
-                    appointmentWithRelations.doctor?.name =
-                        appointmentWithRelations.doctor?.name!!
+//                    appointmentWithRelations.doctor?.name =
+//                        appointmentWithRelations.doctor?.name!!
                 }
                 if (patientObject != null) {
-                    appointmentWithRelations.patient?.name = patientObject?.name!!
+                    appointmentWithRelations.appointment?.patFk = patientObject?.id!!
                 } else {
-                    appointmentWithRelations.patient?.name =
-                        appointmentWithRelations.patient?.name!!
+//                    appointmentWithRelations.patient?.name =
+//                        appointmentWithRelations.patient?.name!!
                 }
                 onClick.onClickSave(appointmentWithRelations)
             }
-
-
 //        binding.autoCompleteCategoryDoctor.setText(doctorWithCategory.category?.name, false)
-
     }
 }

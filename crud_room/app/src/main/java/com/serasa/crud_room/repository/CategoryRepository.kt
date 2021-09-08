@@ -12,6 +12,10 @@ class CategoryRepository @Inject constructor(
         return dao.categoryDAO().getCategories()
     }
 
+    fun fetchCategoryById(id: Long): Category {
+        return dao.categoryDAO().getCategoryById(id)
+    }
+
     fun updateCategories(category: Category) {
         dao.categoryDAO().updateCategoryTest(category)
     }

@@ -16,11 +16,18 @@ class CategoryViewModel @Inject constructor(
     private val _category = MutableLiveData<List<Category>>()
     var category: LiveData<List<Category>> = _category
 
+    private val _categoryId = MutableLiveData<Category>()
+    var categoryId: LiveData<Category> = _categoryId
+
     private val _error = MutableLiveData<String>()
     var error: LiveData<String> = _error
 
     fun fetchCategories() {
         _category.value = repository.fetchCategories()
+    }
+
+    fun fetchCategoryById(id: Long) {
+        _categoryId.value = repository.fetchCategoryById(id)
     }
 
     fun updateCategories(category: Category) {

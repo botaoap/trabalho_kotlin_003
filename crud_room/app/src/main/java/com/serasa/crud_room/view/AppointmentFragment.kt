@@ -15,6 +15,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.serasa.crud_room.R
 import com.serasa.crud_room.adapter.AppointmentAdapter
 import com.serasa.crud_room.databinding.AppointmentFragmentBinding
+import com.serasa.crud_room.databinding.ItemAppointmentBinding
 import com.serasa.crud_room.model.*
 import com.serasa.crud_room.utils.ClickOnAppointment
 import com.serasa.crud_room.utils.hideKeyboard
@@ -67,10 +68,6 @@ class AppointmentFragment : Fragment(R.layout.appointment_fragment), ClickOnAppo
         adapter.refresh(it, PATIENT, DOCTOR)
     }
 
-    private val observerPatient = Observer<List<Patient>> {
-        PATIENT = it
-    }
-
     private val observerGender = Observer<List<String>> {
         GENDER = it
     }
@@ -79,8 +76,14 @@ class AppointmentFragment : Fragment(R.layout.appointment_fragment), ClickOnAppo
         CATEGORY = it
     }
 
+    private val observerPatient = Observer<List<Patient>> {
+        PATIENT = it
+        viewModel.fetchAppointment()
+    }
+
     private val observerDoctor = Observer<List<DoctorWithCategory>> {
         DOCTOR = it
+        viewModelPatient.fetchPatient()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -114,10 +117,9 @@ class AppointmentFragment : Fragment(R.layout.appointment_fragment), ClickOnAppo
         viewModelPatient.gender.observe(viewLifecycleOwner, observerGender)
         viewModelCategory.category.observe(viewLifecycleOwner, observerCategory)
 
-
         viewModelDoctor.fetchDoctors()
-        viewModelPatient.fetchPatient()
-        viewModel.fetchAppointment()
+
+
 
         binding.floatingActionButtonAddAppointment.setOnClickListener {
             Intent(requireContext(), AppointmentActivity::class.java).apply {
