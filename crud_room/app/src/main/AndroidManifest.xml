@@ -3,6 +3,7 @@
     package="com.serasa.crud_room">
 
     <application
+        android:name=".CrudModule"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -10,7 +11,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Crud_room">
         <activity
-            android:name=".MainActivity"
+            android:name=".view_activity.AppointmentActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view_activity.CategoryActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view_activity.DoctorActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view_activity.PatientActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view_activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
