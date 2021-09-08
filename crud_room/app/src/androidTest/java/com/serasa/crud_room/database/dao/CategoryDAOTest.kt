@@ -40,12 +40,13 @@ class CategoryDAOTest {
         val category1 = Category(name = "Medico1")
         val category2 = Category(name = "Medico2")
         val category3 = Category(name = "Medico3")
-        val listCat = arrayListOf(category1, category2, category3)
-        dao.insert(listCat)
-        val getAll = dao.getCategories()
+
+        dao.insertCategory(category1)
+        dao.insertCategory(category2)
+        dao.insertCategory(category3)
 
         val result = dao.getCategories()
-        assertThat(result).isEqualTo(getAll)
+        assertThat(result).contains(category1)
     }
 
     @Test
@@ -53,8 +54,10 @@ class CategoryDAOTest {
         val category1 = Category(name = "Medico1")
         val category2 = Category(name = "Medico2")
         val category3 = Category(name = "Medico3")
-        val listCat = arrayListOf(category1, category2, category3)
-        dao.insert(listCat)
+
+        dao.insertCategory(category1)
+        dao.insertCategory(category2)
+        dao.insertCategory(category3)
 
         val result = dao.getCategories()
         assertThat(result).hasSize(3)
@@ -63,22 +66,20 @@ class CategoryDAOTest {
     @Test
     fun delete_category_returns_true() {
         val category1 = Category(id = 1,name = "Medico1")
-        val category2 = Category(id = 2,name = "Medico2")
-        val category3 = Category(id = 3,name = "Medico3")
-        val listCat = arrayListOf(category1, category2, category3)
-        dao.insert(listCat)
+
+        dao.insertCategory(category1)
         dao.deleteCategory(category1)
 
         val result = dao.getCategories()
-        assertThat(result).hasSize(2)
+        assertThat(result).hasSize(0)
     }
 
     @Test
     fun update_category_returns_true() {
         val category1 = Category(id = 1,name = "Medico1")
-        val listCat = arrayListOf(category1)
-        dao.insert(listCat)
-        dao.updateCategory("Medicado", idCategory = 1)
+        val category2 = Category(id = 1,name = "Medicado")
+        dao.insertCategory(category1)
+        dao.updateCategoryTest(category2)
 
         val result = dao.getCategories()
         assertThat(result).isNotEqualTo(category1)

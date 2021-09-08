@@ -40,35 +40,31 @@ class DoctorDAOTest {
     @Test
     fun get_all_doctor_returns_true() {
         val category1 = Category(id = 1, name = "Pediatra")
-        val doctor1 = Doctor(id = 1, name = "Medico1", categoryFk = 1)
+        val doctor1 = Doctor(id = 1, name = "Medico1", categoryFk = category1.id)
 
-        val doctorWithCategory = DoctorWithCategory(doctor = doctor1, category = category1)
-        dao.insert(doctorWithCategory)
-        val getAll = dao.getDoctor()
+        dao.insertDoctor(doctor1)
 
         val result = dao.getDoctor()
-        assertThat(result).isEqualTo(getAll)
+        assertThat(result).contains(doctor1.name)
     }
 
     @Test
     fun insert_doctor_returns_true() {
         val category1 = Category(id = 1, name = "Pediatra")
-        val doctor1 = Doctor(id = 1, name = "Medico1", categoryFk = 1)
+        val doctor1 = Doctor(id = 1, name = "Medico1", categoryFk = category1.id)
 
-        val doctorWithCategory = DoctorWithCategory(doctor = doctor1, category = category1)
-        dao.insert(doctorWithCategory)
+        dao.insertDoctor(doctor1)
 
         val result = dao.getDoctor()
-        assertThat(result).contains(doctorWithCategory)
+        assertThat(result).hasSize(1)
     }
 
     @Test
     fun delete_doctor_returns_true() {
         val category1 = Category(id = 1, name = "Pediatra")
-        val doctor1 = Doctor(id = 1, name = "Medico1", categoryFk = 1)
+        val doctor1 = Doctor(id = 1, name = "Medico1", categoryFk = category1.id)
 
-        val doctorWithCategory = DoctorWithCategory(doctor = doctor1, category = category1)
-        dao.deleteDoctor(doctorWithCategory)
+        dao.deleteDoctor(doctor1)
 
         val result = dao.getDoctor()
         assertThat(result).hasSize(0)
@@ -79,16 +75,13 @@ class DoctorDAOTest {
         val category1 = Category(id = 1, name = "Pediatra")
         val category2 = Category(id = 2, name = "PPPP")
         val doctor1 = Doctor(id = 1, name = "Medico1", categoryFk = category1.id)
-        val doctor2 = Doctor(id = 2, name = "Medico2", categoryFk = category2.id)
+        val doctor2 = Doctor(id = 1, name = "Medicadinho", categoryFk = category2.id)
 
-        val doctorWithCategory1 = DoctorWithCategory(doctor = doctor1, category = category1)
-        val doctorWithCategory2 = DoctorWithCategory(doctor = doctor2, category = category2)
-        dao.insert(doctorWithCategory1)
-        dao.insert(doctorWithCategory2)
-        dao.updateDoctor(nameUpdate = "Medicado", idCategory = 2, idDoctor = 1)
+        dao.insertDoctor(doctor1)
+        dao.updateDoctorTest(doctor2)
 
         val result = dao.getDoctor()
-        assertThat(result).isNotEqualTo(doctorWithCategory1)
+        assertThat(result).isNotEqualTo(doctor1)
     }
 
 }

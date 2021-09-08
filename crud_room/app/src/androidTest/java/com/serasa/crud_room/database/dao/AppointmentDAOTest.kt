@@ -42,18 +42,12 @@ class AppointmentDAOTest {
         val category1 = Category(id = 1, name = "Pediatra")
         val doctor1 = Doctor(id = 1, name = "Medico1", categoryFk = category1.id)
 
-        val appointment1 = Appointment(id = 1,patFk = 1, 1)
-        val appointmentWithRelations =
-            AppointmentWithRelations(
-                appointment = appointment1,
-                doctor = doctor1,
-                patient = patient1
-            )
-        dao.insert(appointmentWithRelations)
-        val getAll = dao.getAppointments()
+        val appointment1 = Appointment(id = 1,patFk = patient1.id, doctor1.id)
+
+        dao.insertAppointment(appointment1)
 
         val result = dao.getAppointments()
-        assertThat(result).isEqualTo(getAll)
+        assertThat(result).isEqualTo(appointment1)
     }
 
     @Test
@@ -63,13 +57,8 @@ class AppointmentDAOTest {
         val doctor1 = Doctor(id = 1, name = "Medico1", categoryFk = category1.id)
 
         val appointment1 = Appointment(id = 1,patFk = 1, docFk = 1)
-        val appointmentWithRelations =
-            AppointmentWithRelations(
-                appointment = appointment1,
-                doctor = doctor1,
-                patient = patient1
-            )
-        dao.insert(appointmentWithRelations)
+
+        dao.insertAppointment(appointment1)
 
         val result = dao.getAppointments()
         assertThat(result).hasSize(1)
@@ -82,13 +71,8 @@ class AppointmentDAOTest {
         val doctor1 = Doctor(id = 1, name = "Medico1", categoryFk = category1.id)
 
         val appointment1 = Appointment(id = 1,patFk = 1, docFk = 1)
-        val appointmentWithRelations =
-            AppointmentWithRelations(
-                appointment = appointment1,
-                doctor = doctor1,
-                patient = patient1
-            )
-        dao.deleteAppointment(appointmentWithRelations)
+
+        dao.deleteAppointment(appointment1)
 
         val result = dao.getAppointments()
         assertThat(result).hasSize(0)
@@ -100,30 +84,13 @@ class AppointmentDAOTest {
         val category1 = Category(id = 1, name = "Pediatra")
         val doctor1 = Doctor(id = 1, name = "Medico1", categoryFk = category1.id)
         val appointment1 = Appointment(id = 1,patFk = 1, docFk = 1)
-        val appointmentWithRelations =
-            AppointmentWithRelations(
-                appointment = appointment1,
-                doctor = doctor1,
-                patient = patient1
-            )
-        dao.insert(appointmentWithRelations)
+        val appointment2 = Appointment(id = 1,patFk = 2, docFk = 2)
 
-//        val patient2 = Patient(id = 2,name = "aa", age = 10, gender = "M")
-//        val category2 = Category(id = 2, name = "Pediatra")
-//        val doctor2 = Doctor(id = 2, name = "Medico1", categoryFk = category2.id)
-//        val appointment2 = Appointment(id = 2,patFk = 1, docFk = 1)
-//        val appointmentWithRelations2 =
-//            AppointmentWithRelations(
-//                appointment = appointment2,
-//                doctor = doctor2,
-//                patient = patient2
-//            )
-//
-//        dao.insert(appointmentWithRelations2)
+        dao.insertAppointment(appointment1)
 
-        dao.updateAppointment(idAppoint = 1, updateDoc = 2, updatePat = 2)
+        dao.updateAppointmentTest(appointment2)
 
         val result = dao.getAppointments()
-        assertThat(result).isNotEqualTo(appointmentWithRelations)
+        assertThat(result).isNotEqualTo(appointment1)
     }
 }

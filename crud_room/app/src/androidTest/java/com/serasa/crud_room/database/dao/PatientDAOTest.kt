@@ -38,14 +38,11 @@ class PatientDAOTest {
     @Test
     fun get_all_patient_returns_true() {
         val patient1 = Patient(name = "aa", age = 10, gender = "M")
-        val patient2 = Patient(name = "bb", age = 11, gender = "F")
-        val patient3 = Patient(name = "cc", age = 12, gender = "M")
-        val listPat = arrayListOf(patient1, patient2, patient3)
-        dao.insert(listPat)
-        val getAll = dao.getPatients()
+
+        dao.insertPatient(patient1)
 
         val result = dao.getPatients()
-        assertThat(result).isEqualTo(getAll)
+        assertThat(result).contains(listOf(patient1))
     }
 
     @Test
@@ -53,8 +50,10 @@ class PatientDAOTest {
         val patient1 = Patient(name = "aa", age = 10, gender = "M")
         val patient2 = Patient(name = "bb", age = 11, gender = "F")
         val patient3 = Patient(name = "cc", age = 12, gender = "M")
-        val listPat = arrayListOf(patient1, patient2, patient3)
-        dao.insert(listPat)
+
+        dao.insertPatient(patient1)
+        dao.insertPatient(patient2)
+        dao.insertPatient(patient3)
 
         val result = dao.getPatients()
         assertThat(result).hasSize(3)
@@ -63,22 +62,20 @@ class PatientDAOTest {
     @Test
     fun delete_patient_returns_true() {
         val patient1 = Patient(id = 1,name = "aa", age = 10, gender = "M")
-        val patient2 = Patient(id = 2,name = "bb", age = 11, gender = "F")
-        val patient3 = Patient(id = 3,name = "cc", age = 12, gender = "M")
-        val listPat = arrayListOf(patient1, patient2, patient3)
-        dao.insert(listPat)
+
+        dao.insertPatient(patient1)
         dao.deletePatient(patient1)
 
         val result = dao.getPatients()
-        assertThat(result).hasSize(2)
+        assertThat(result).hasSize(0)
     }
 
     @Test
     fun update_patient_returns_true() {
         val patient1 = Patient(id = 1,name = "aa", age = 10, gender = "M")
-        val listPat = arrayListOf(patient1)
-        dao.insert(listPat)
-        dao.updatePatient(nameUpdate = "cc", genderUpdate = "F", ageUpdate = 11, idPatient = 1)
+        val patient2 = Patient(id = 1,name = "aabb", age = 10, gender = "M")
+        dao.insertPatient(patient1)
+        dao.updatePatientTest(patient2)
 
         val result = dao.getPatients()
         assertThat(result).isNotEqualTo(patient1)
