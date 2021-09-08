@@ -12,6 +12,10 @@ class DoctorRepository @Inject constructor(
         return dao.getDoctor()
     }
 
+    fun fetchAppointmentDoctorById(id: Long): DoctorWithCategory {
+        return dao.getDoctorById(id)
+    }
+
     fun insertDoctor(doctor: Doctor) {
         dao.insertDoctor(doctor)
     }

@@ -32,6 +32,7 @@ abstract class AppDatabase : RoomDatabase() {
                 AppDatabase::class.java,
                 "projetct_crud_room"
             )
+                .fallbackToDestructiveMigration()
                 .allowMainThreadQueries()
                 .build()
         }

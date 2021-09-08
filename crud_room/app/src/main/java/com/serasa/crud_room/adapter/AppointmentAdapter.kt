@@ -67,7 +67,7 @@ class ItemAppointmentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVi
         binding.autoCompleteDoctorAppointment.setText(appointmentWithRelations.doctor?.name)
         binding.autoCompletePatientAppointment.setText(appointmentWithRelations.patient?.name)
         binding.editTextIdAppointment.setText(appointmentWithRelations.appointment?.id.toString())
-        binding.editTextDoctorCategoryAppointment.setText(appointmentWithRelations.doctor?.categoryFk.toString())
+        binding.editTextDoctorCategoryAppointment.setText(appointmentWithRelations.doctor?.category?.name)
         binding.editTexPatientGenderAppointment.setText(appointmentWithRelations.patient?.gender)
 
         // TODO: Load AutoCompleteTextView with PATIENTS

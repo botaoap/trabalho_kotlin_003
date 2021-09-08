@@ -68,6 +68,14 @@ class AppointmentFragment : Fragment(R.layout.appointment_fragment), ClickOnAppo
         adapter.refresh(it, PATIENT, DOCTOR)
     }
 
+    private val observerDoctorById = Observer<DoctorWithCategory> {
+
+    }
+
+    private val observerCategoryById = Observer<DoctorWithCategory> {
+
+    }
+
     private val observerGender = Observer<List<String>> {
         GENDER = it
     }
@@ -112,8 +120,10 @@ class AppointmentFragment : Fragment(R.layout.appointment_fragment), ClickOnAppo
         viewModel.appointment.observe(viewLifecycleOwner, observerAppointment)
         viewModel.gender.observe(viewLifecycleOwner, observerFilteredGender)
         viewModel.category.observe(viewLifecycleOwner, observerFilteredCategory)
+        viewModel.categoryById
         viewModelPatient.patient.observe(viewLifecycleOwner, observerPatient)
         viewModelDoctor.doctor.observe(viewLifecycleOwner, observerDoctor)
+        viewModelDoctor.doctorByid.observe(viewLifecycleOwner, observerDoctorById)
         viewModelPatient.gender.observe(viewLifecycleOwner, observerGender)
         viewModelCategory.category.observe(viewLifecycleOwner, observerCategory)
 
@@ -146,25 +156,12 @@ class AppointmentFragment : Fragment(R.layout.appointment_fragment), ClickOnAppo
                         autoComplete.setAdapter(arrayAdapter)
                     }
                 }
-
-//                val adapter = ArrayAdapter(
-//                    requireContext(),
-//                    android.R.layout.simple_dropdown_item_1line,
-//                    GENDER
-//                )
-//                val textView = binding.autocompleteSearchAppointment as AutoCompleteTextView
-//                textView.setAdapter(adapter)
-
                 binding.autocompleteSearchAppointment.setOnItemClickListener { adapterView, view, i, l ->
                     genderObject = adapterView.getItemAtPosition(i) as String
                 }
 
 
             } else {
-//                (binding.autocompleteSearchAppointment as AutoCompleteTextView).let { autoComplete ->
-//                    autoComplete.clearListSelection()
-//                }
-
                 binding.outlinedTextFieldsearchAppointment.hint = "Search"
             }
 
