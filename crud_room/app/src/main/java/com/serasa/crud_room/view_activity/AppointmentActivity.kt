@@ -78,9 +78,7 @@ class AppointmentActivity : AppCompatActivity() {
 
     fun executeComponents() {
         binding.buttonCancel.setOnClickListener {
-            Intent(this, MainActivity::class.java).apply {
-                startActivity(this)
-            }
+            finish()
         }
 
         binding.buttonSave.setOnClickListener {
@@ -90,9 +88,7 @@ class AppointmentActivity : AppCompatActivity() {
                     patFk = patientObject?.id!!
                 )
             )
-            Intent(this, MainActivity::class.java).apply {
-                startActivity(this)
-            }
+            finish()
         }
     }
 }

@@ -54,9 +54,7 @@ class PatientActivity : AppCompatActivity() {
 
     fun executeComponents() {
         binding.buttonCancel.setOnClickListener {
-            Intent(this, MainActivity::class.java).apply {
-                startActivity(this)
-            }
+            finish()
         }
         binding.buttonSave.setOnClickListener {
             viewModel.insertPatient(
@@ -66,9 +64,7 @@ class PatientActivity : AppCompatActivity() {
                             age = binding.editTextAge.text.toString().toInt()
                     )
             )
-            Intent(this, MainActivity::class.java).apply {
-                startActivity(this)
-            }
+            finish()
 
         }
     }

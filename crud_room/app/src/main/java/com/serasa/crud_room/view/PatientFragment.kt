@@ -41,11 +41,17 @@ class PatientFragment : Fragment(R.layout.patient_fragment), ClickOnPatient {
 
     private val observerGender = Observer<List<String>> {
         GENDER = it
-        viewModel.fetchPatient()
+//        viewModel.fetchPatient()
     }
 
     private val observerError = Observer<String> {
         Snackbar.make(requireView(), "Error Error", Snackbar.LENGTH_LONG).show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.fetchGender()
+        viewModel.fetchPatient()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -72,7 +78,7 @@ class PatientFragment : Fragment(R.layout.patient_fragment), ClickOnPatient {
 
     fun executeComponents() {
 
-        viewModel.fetchGender()
+//        viewModel.fetchGender()
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter

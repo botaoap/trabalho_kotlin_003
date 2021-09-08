@@ -47,11 +47,17 @@ class DoctorFragment : Fragment(R.layout.doctor_fragment), ClickOnDoctor {
 
     private val observerCategory = Observer<List<Category>> {
         CATEGORY = it
-        viewModel.fetchDoctors()
+//        viewModel.fetchDoctors()
     }
 
     private val observerError = Observer<String> {
         Snackbar.make(requireView(), "Error Error", Snackbar.LENGTH_LONG).show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModelCategory.fetchCategories()
+        viewModel.fetchDoctors()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -81,7 +87,7 @@ class DoctorFragment : Fragment(R.layout.doctor_fragment), ClickOnDoctor {
         viewModelCategory.category.observe(viewLifecycleOwner, observerCategory)
 
 //        viewModel.fetchDoctors()
-        viewModelCategory.fetchCategories()
+//        viewModelCategory.fetchCategories()
 
         binding.floatingActionButtonAddDoctor.setOnClickListener {
             Intent(requireContext(), DoctorActivity::class.java).apply {
