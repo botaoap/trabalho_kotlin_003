@@ -21,9 +21,10 @@ data class AppointmentWithRelations(
         entityColumn = "doc_id"
     )
     val doctor: Doctor?,
+
     @Relation(
         parentColumn = "patFk",
         entityColumn = "pat_id"
     )
-    val patient: Patient?,
+    val patient: Patient?
 )

@@ -55,5 +55,5 @@ class HiltModule {
     fun providesDoctorRepository(doctorDAO: DoctorDAO): DoctorRepository = DoctorRepository(doctorDAO)
 
     @Provides
-    fun provideAppointmentRepository(appointmentDAO: AppointmentDAO): AppointmentRepository = AppointmentRepository(appointmentDAO)
+    fun provideAppointmentRepository(appointmentDAO: AppointmentDAO, categoryDAO: CategoryDAO): AppointmentRepository = AppointmentRepository(appointmentDAO, categoryDAO)
 }

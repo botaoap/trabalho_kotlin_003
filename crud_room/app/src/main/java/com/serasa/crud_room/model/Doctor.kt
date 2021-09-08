@@ -11,7 +11,10 @@ data class Doctor(
     var name: String,
 
     var categoryFk: Long
-)
+) {
+    @Ignore
+    var category: Category? = null
+}
 
 data class DoctorWithCategory(
     @Embedded
@@ -21,7 +24,7 @@ data class DoctorWithCategory(
         entityColumn = "cat_id"
     )
     val category: Category?
-){
+) {
     override fun toString(): String {
         return doctor?.name!!
     }

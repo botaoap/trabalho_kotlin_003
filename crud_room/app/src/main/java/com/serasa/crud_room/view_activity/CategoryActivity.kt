@@ -43,7 +43,7 @@ class CategoryActivity : AppCompatActivity() {
                 )
             )
 
-            Intent(this, CategoryFragment::class.java).apply {
+            Intent(this, MainActivity::class.java).apply {
                 startActivity(this)
             }
         }

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.serasa.crud_room.model.Appointment
 import com.serasa.crud_room.model.AppointmentWithRelations
+import com.serasa.crud_room.model.DoctorWithCategory
 import com.serasa.crud_room.repository.AppointmentRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -23,6 +24,9 @@ class AppointmentViewModel @Inject constructor(
     private val _category = MutableLiveData<List<AppointmentWithRelations>>()
     var category: LiveData<List<AppointmentWithRelations>> = _category
 
+    private val _categoryById = MutableLiveData<DoctorWithCategory>()
+    var categoryById: LiveData<DoctorWithCategory> = _categoryById
+
     fun fetchAppointment() {
         _appoinment.value = repository.fetchAppointment()
     }
@@ -34,6 +38,10 @@ class AppointmentViewModel @Inject constructor(
     fun fetchFilteredAppointmentOfCategory(category: String) {
         _category.value = repository.fetchFilteredAppoinmentOfCategory(category)
     }
+
+//    fun fetchCategoryIdByDoctor(id: Long) {
+//        _categoryById.value = repository.fetchCategoryIdByDoctor(id)
+//    }
 
     fun insertAppointment(appointment: Appointment) {
         repository.insertAppointment(appointment)
