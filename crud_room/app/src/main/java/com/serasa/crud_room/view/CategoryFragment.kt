@@ -51,7 +51,10 @@ class CategoryFragment : Fragment(R.layout.category_fragment), ClickOnCategory {
         Snackbar.make(requireView(), "Error Error", Snackbar.LENGTH_LONG).show()
     }
 
-
+    override fun onResume() {
+        super.onResume()
+        viewModel.fetchCategories()
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -65,8 +68,6 @@ class CategoryFragment : Fragment(R.layout.category_fragment), ClickOnCategory {
         recyclerView = binding.recyclerViewCategory
         adapter = CategoryAdapter(this)
 
-        viewModel.fetchCategories()
-
 
         viewModel.category.observe(viewLifecycleOwner, observerCategory)
         viewModel.error.observe(viewLifecycleOwner, observerError)
@@ -78,7 +79,7 @@ class CategoryFragment : Fragment(R.layout.category_fragment), ClickOnCategory {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
 
-        viewModel.fetchCategories()
+//        viewModel.fetchCategories()
 
         binding.floatingActionButtonAddCategory.setOnClickListener {
             Intent(requireContext(), CategoryActivity::class.java).apply {

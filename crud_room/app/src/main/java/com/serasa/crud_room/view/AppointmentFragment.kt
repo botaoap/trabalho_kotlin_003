@@ -86,12 +86,22 @@ class AppointmentFragment : Fragment(R.layout.appointment_fragment), ClickOnAppo
 
     private val observerPatient = Observer<List<Patient>> {
         PATIENT = it
-        viewModel.fetchAppointment()
+//        viewModel.fetchAppointment()
     }
 
     private val observerDoctor = Observer<List<DoctorWithCategory>> {
         DOCTOR = it
+//        viewModelPatient.fetchPatient()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModelPatient.fetchGender()
+        viewModelCategory.fetchCategories()
         viewModelPatient.fetchPatient()
+        viewModelDoctor.fetchDoctors()
+        viewModel.fetchAppointment()
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -127,9 +137,6 @@ class AppointmentFragment : Fragment(R.layout.appointment_fragment), ClickOnAppo
         viewModelPatient.gender.observe(viewLifecycleOwner, observerGender)
         viewModelCategory.category.observe(viewLifecycleOwner, observerCategory)
 
-        viewModelDoctor.fetchDoctors()
-
-
 
         binding.floatingActionButtonAddAppointment.setOnClickListener {
             Intent(requireContext(), AppointmentActivity::class.java).apply {
@@ -145,7 +152,7 @@ class AppointmentFragment : Fragment(R.layout.appointment_fragment), ClickOnAppo
             if (binding.choiceChips.chipGender.isChecked) {
                 binding.outlinedTextFieldsearchAppointment.hint = binding.choiceChips.chipGender.text
 
-                viewModelPatient.fetchGender()
+//                viewModelPatient.fetchGender()
 
                 ArrayAdapter(
                     requireContext(),
@@ -172,7 +179,7 @@ class AppointmentFragment : Fragment(R.layout.appointment_fragment), ClickOnAppo
             if (binding.choiceChips.chipCategory.isChecked) {
                 binding.outlinedTextFieldsearchAppointment.hint = binding.choiceChips.chipCategory.text
 
-                viewModelCategory.fetchCategories()
+//                viewModelCategory.fetchCategories()
 
                 ArrayAdapter(
                     requireContext(),

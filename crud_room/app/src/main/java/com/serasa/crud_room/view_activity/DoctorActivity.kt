@@ -59,9 +59,7 @@ class DoctorActivity : AppCompatActivity() {
 
     fun executeComponents() {
         binding.buttonCancel.setOnClickListener {
-            Intent(this, MainActivity::class.java).apply {
-                startActivity(this)
-            }
+            finish()
         }
 
         binding.buttonSave.setOnClickListener {
@@ -71,9 +69,7 @@ class DoctorActivity : AppCompatActivity() {
                     categoryFk = categoryObject!!.id
                 )
             )
-            Intent(this, MainActivity::class.java).apply {
-                startActivity(this)
-            }
+            finish()
         }
     }
 }

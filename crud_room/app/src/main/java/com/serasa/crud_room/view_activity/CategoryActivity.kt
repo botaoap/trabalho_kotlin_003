@@ -32,9 +32,7 @@ class CategoryActivity : AppCompatActivity() {
 
     fun executeComponents() {
         binding.buttonCancelCategory.setOnClickListener {
-            Intent(this, MainActivity::class.java).apply {
-                startActivity(this)
-            }
+            finish()
         }
         binding.buttonSaveCategory.setOnClickListener {
             viewModel.insertCategories(
@@ -42,10 +40,7 @@ class CategoryActivity : AppCompatActivity() {
                     name = binding.editTextNameAddCategory.text.toString()
                 )
             )
-
-            Intent(this, MainActivity::class.java).apply {
-                startActivity(this)
-            }
+            finish()
         }
     }
 }
